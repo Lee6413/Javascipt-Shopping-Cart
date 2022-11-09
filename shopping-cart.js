@@ -1,13 +1,22 @@
-const removeCartItemButton = document.getElementsByClassName('btn-danger')
-console.log(removeCartItemButton)
-for (let i = 0; i < removeCartItemButton.length; i++) {
-  let button = removeCartItemButton[i];
-  button.addEventListener('click', function(event) {
+if (document.readyState == 'loading') {
+  document.addEventListener('DOMContentLoaded', ready)
+} else {
+  ready()
+}
+
+function ready(){
+  const removeCartItemButton = document.getElementsByClassName('btn-danger')
+  console.log(removeCartItemButton)
+  for (let i = 0; i < removeCartItemButton.length; i++) {
+    let button = removeCartItemButton[i];
+    button.addEventListener('click', function(event) {
     let buttonClick = event.target
     buttonClick.parentElement.parentElement.remove()
     updateCartTotal();
-  })
+    })
+  }
 }
+
 
 function updateCartTotal() {
   let cartItemContainer = document.getElementsByClassName('cart-items')[0]
