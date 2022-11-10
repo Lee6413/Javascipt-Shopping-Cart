@@ -9,12 +9,28 @@ function ready(){
   console.log(removeCartItemButton)
   for (let i = 0; i < removeCartItemButton.length; i++) {
     let button = removeCartItemButton[i];
-    button.addEventListener('click', function(event) {
-    let buttonClick = event.target
-    buttonClick.parentElement.parentElement.remove()
-    updateCartTotal();
-    })
+    button.addEventListener('click', removeCartItem)
   }
+
+  let quantityInputs = document.getElementsByClassName('cart-quantity-input')
+  for (let i = 0; i < quantityInputs.length; i++) {
+    let input = quantityInputs[i]
+    input.addEventListener('change', quantityChange)
+  }
+}
+
+function quantityChange(event) {
+  let input = event.target
+  if (isNaN(input.value) || input.value <= 0 ) {
+    input.value = 1
+  }
+  updateCartTotal();
+}
+
+function removeCartItem(event) {
+  let buttonClick = event.target
+  buttonClick.parentElement.parentElement.remove()
+  updateCartTotal();
 }
 
 
