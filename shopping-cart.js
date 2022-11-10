@@ -6,7 +6,6 @@ if (document.readyState == 'loading') {
 
 function ready(){
   const removeCartItemButton = document.getElementsByClassName('btn-danger')
-  console.log(removeCartItemButton)
   for (let i = 0; i < removeCartItemButton.length; i++) {
     let button = removeCartItemButton[i];
     button.addEventListener('click', removeCartItem)
@@ -17,14 +16,12 @@ function ready(){
     let input = quantityInputs[i]
     input.addEventListener('change', quantityChange)
   }
-}
 
-function quantityChange(event) {
-  let input = event.target
-  if (isNaN(input.value) || input.value <= 0 ) {
-    input.value = 1
+  let addToCartButton = document.getElementsByClassName('shop-item-button')
+  for (let i = 0; i < addToCartButton.length; i++) {
+    let button = addToCartButton[i]
+    button.addEventListener('click', addToCartClick)
   }
-  updateCartTotal();
 }
 
 function removeCartItem(event) {
@@ -33,6 +30,27 @@ function removeCartItem(event) {
   updateCartTotal();
 }
 
+function quantityChange(event) {
+  let input = event.target
+  if (isNaN(input.value) || input.value <= 0) {
+    input.value = 1
+  }
+  updateCartTotal();
+}
+
+function addToCartClick(event) {
+  let button = event.target
+  let shopItem = button.parentElement.parentElement
+  let title = shopItem.getElementsByClassName('shop-item-title')[0].innerText
+  let price = shopItem.getElementsByClassName('shop-item-price')[0].innerText
+  let imageSrc = shopItem.getElementsByClassName('shop-item-image')[0].src
+  console.log(title, price, imageSrc)
+  addItemToCart(title, price, imageSrc)
+}
+
+function addItemToCart(title, price, imageSrc) {
+  let cartRow
+}
 
 function updateCartTotal() {
   let cartItemContainer = document.getElementsByClassName('cart-items')[0]
@@ -45,8 +63,8 @@ function updateCartTotal() {
     let price = parseFloat(priceElement.innerText.replace('$', ''))
     let quantity = quantityElement.value
     newTotal = total + (price * quantity)
-    console.log(price)
   }
+  newTotal = Math.round(newTotal * 100) / 100
   document.getElementsByClassName('cart-total-price')[0].innerText = '$' + newTotal
 }
 
