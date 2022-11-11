@@ -46,10 +46,32 @@ function addToCartClick(event) {
   let imageSrc = shopItem.getElementsByClassName('shop-item-image')[0].src
   console.log(title, price, imageSrc)
   addItemToCart(title, price, imageSrc)
+  updateCartTotal();
 }
 
 function addItemToCart(title, price, imageSrc) {
-  let cartRow
+  let cartRow = document.createElement('div')
+  cartRow.classList.add('cart-row')
+  let cartItems = document.getElementsByClassName('cart-items')[0]
+  let cartItemName = cartItems.getElementsByClassName('cart-item-tittle')
+  for (let i = 0; i < cartItemName.length; i++) {
+    if (cartItemName[i].innerText == title) {
+      alert('This item is already added to the cart')
+      return
+    }
+  }
+  let cartRowContent = `
+    <div class="cart-item cart-column">
+      <img class="cart-item-image" src="${imageSrc}" width="100" height="100">
+      <span class="cart-item-title">${title}</span>
+    </div>
+    <span class="cart-price cart-column">${price}</span>
+    <div class="cart-quantity cart-column">
+      <input class="cart-quantity-input" type="number" value="1">
+      <button class="btn btn-danger" type="button">REMOVE</button>
+    </div>`
+  cartRow.innerHTML = cartRowContent
+  cartItems.appendChild(cartRow)
 }
 
 function updateCartTotal() {
