@@ -22,6 +22,17 @@ function ready() {
     let button = addToCartButton[i]
     button.addEventListener('click', addToCartClick)
   }
+
+  document.getElementsByClassName('btn-purchase')[0].addEventListener('click', purchaseClick)
+}
+
+function purchaseClick() {
+  alert('Thank you for your purchase!')
+  let cartItems = document.getElementsByClassName('cart-items')[0]
+  while (cartItems.hasChildNodes()) {
+    cartItems.removeChild(cartItems.firstChild)
+  }
+  updateCartTotal()
 }
 
 function removeCartItem(event) {
