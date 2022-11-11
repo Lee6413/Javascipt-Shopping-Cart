@@ -4,8 +4,8 @@ if (document.readyState == 'loading') {
   ready()
 }
 
-function ready(){
-  const removeCartItemButton = document.getElementsByClassName('btn-danger')
+function ready() {
+  let removeCartItemButton = document.getElementsByClassName('btn-danger')
   for (let i = 0; i < removeCartItemButton.length; i++) {
     let button = removeCartItemButton[i];
     button.addEventListener('click', removeCartItem)
@@ -44,7 +44,6 @@ function addToCartClick(event) {
   let title = shopItem.getElementsByClassName('shop-item-title')[0].innerText
   let price = shopItem.getElementsByClassName('shop-item-price')[0].innerText
   let imageSrc = shopItem.getElementsByClassName('shop-item-image')[0].src
-  console.log(title, price, imageSrc)
   addItemToCart(title, price, imageSrc)
   updateCartTotal();
 }
@@ -53,10 +52,10 @@ function addItemToCart(title, price, imageSrc) {
   let cartRow = document.createElement('div')
   cartRow.classList.add('cart-row')
   let cartItems = document.getElementsByClassName('cart-items')[0]
-  let cartItemName = cartItems.getElementsByClassName('cart-item-tittle')
+  let cartItemName = cartItems.getElementsByClassName('cart-item-title')
   for (let i = 0; i < cartItemName.length; i++) {
     if (cartItemName[i].innerText == title) {
-      alert('This item is already added to the cart')
+      alert('This item is already added to the cart.')
       return
     }
   }
@@ -71,7 +70,9 @@ function addItemToCart(title, price, imageSrc) {
       <button class="btn btn-danger" type="button">REMOVE</button>
     </div>`
   cartRow.innerHTML = cartRowContent
-  cartItems.appendChild(cartRow)
+  cartItems.append(cartRow)
+  cartRow.getElementsByClassName('btn-danger')[0].addEventListener('click', removeCartItem )
+  cartRow.getElementsByClassName('cart-quantity-input')[0].addEventListener('change', quantityChange)
 }
 
 function updateCartTotal() {
@@ -84,10 +85,10 @@ function updateCartTotal() {
     let quantityElement = cartRow.getElementsByClassName('cart-quantity-input')[0]
     let price = parseFloat(priceElement.innerText.replace('$', ''))
     let quantity = quantityElement.value
-    newTotal = total + (price * quantity)
+    total = total + (price * quantity)
   }
-  newTotal = Math.round(newTotal * 100) / 100
-  document.getElementsByClassName('cart-total-price')[0].innerText = '$' + newTotal
+  total = Math.round(total * 100) / 100
+  document.getElementsByClassName('cart-total-price')[0].innerText = '$' + total
 }
 
 
